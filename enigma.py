@@ -1,9 +1,17 @@
+from builtins import KeyError
 import string
 
 
 class Steckerbrett:
-    def __init__(self):
-        pass
+    def __init__(self, *args):
+        self.map = {}
+
+        for arg in args:
+            if arg[0] in self.map or arg[1] in self.map:
+                raise KeyError('Same letter used twice in plugboard')
+
+            self.map[arg[0]] = arg[1]
+            self.map[arg[1]] = arg[0]
 
 
 class Umkehrwalze:
