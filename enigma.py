@@ -1,3 +1,6 @@
+import string
+
+
 class Steckerbrett:
     def __init__(self):
         pass
