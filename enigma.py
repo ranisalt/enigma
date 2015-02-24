@@ -6,6 +6,14 @@ class Steckerbrett:
         pass
 
 
+class Umkehrwalze:
+    def __init__(self, wiring):
+        self.wiring = wiring
+
+    def encode(self, letter):
+        return self.wiring[string.ascii_uppercase.index(letter)]
+
+
 class Walzen:
     def __init__(self):
         pass
