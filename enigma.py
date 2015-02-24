@@ -70,6 +70,8 @@ class Enigma:
             if letter != ' ':
                 self._rotate()
 
+                letter = self.plugboard.swap(letter)
+
                 for rotor in self.rotors:
                     letter = rotor.encode(letter)
 
@@ -77,6 +79,8 @@ class Enigma:
 
                 for rotor in rotors[::-1]:
                     letter = rotor.encode_reverse(letter)
+
+                letter = self.plugboard.swap(letter)
 
             ciphered += letter
 
