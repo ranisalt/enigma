@@ -52,9 +52,9 @@ class Walzen:
 
 
 class Enigma:
-    def __init__(self, plugboard, rotors, reflector):
-        # Assert that plugboard is a Steckerbrett
-        assert isinstance(plugboard, Steckerbrett)
+    def __init__(self, rotors, reflector, plugboard=None):
+        # Assert that plugboard is a Steckerbrett if not None
+        assert plugboard is None or isinstance(plugboard, Steckerbrett)
 
         # Assert that rotors is a tuple and each tuple element is a Walzen
         assert isinstance(rotors, tuple)
@@ -78,7 +78,8 @@ class Enigma:
             if letter != ' ':
                 self._rotate()
 
-                letter = self.plugboard.swap(letter)
+                if self.plugboard is not None:
+                    letter = self.plugboard.swap(letter)
 
                 for rotor in self.rotors:
                     letter = rotor.encode(letter)
@@ -88,7 +89,8 @@ class Enigma:
                 for rotor in self.rotors[::-1]:
                     letter = rotor.encode_reverse(letter)
 
-                letter = self.plugboard.swap(letter)
+                if self.plugboard is not None:
+                    letter = self.plugboard.swap(letter)
 
             ciphered += letter
 
@@ -116,4 +118,4 @@ if __name__ == '__main__':
 
     reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
 
-    machine = Enigma(plugboard=plugboard, rotors=rotors, reflector=reflector)
+    machine = Enigma(rotors=rotors, reflector=reflector)
