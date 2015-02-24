@@ -50,15 +50,16 @@ class Enigma:
         ciphered = ''
 
         for letter in message:
-            self._rotate()
+            if letter != ' ':
+                self._rotate()
 
-            for rotor in self.rotors:
-                letter = rotor.encode(letter)
+                for rotor in self.rotors:
+                    letter = rotor.encode(letter)
 
-            letter = reflector.encode(letter)
+                letter = reflector.encode(letter)
 
-            for rotor in rotors[::-1]:
-                letter = rotor.encode_reverse(letter)
+                for rotor in rotors[::-1]:
+                    letter = rotor.encode_reverse(letter)
 
             ciphered += letter
 
