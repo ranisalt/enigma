@@ -13,6 +13,11 @@ class Steckerbrett:
             self.map[arg[0]] = arg[1]
             self.map[arg[1]] = arg[0]
 
+    def swap(self, letter):
+        if letter in self.map:
+            return self.map[letter]
+        return letter
+
 
 class Umkehrwalze:
     def __init__(self, wiring):
