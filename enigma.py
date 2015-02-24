@@ -75,7 +75,7 @@ class Enigma:
         ciphered = ''
 
         for letter in message:
-            if letter != ' ':
+            if letter in string.ascii_uppercase:
                 self._rotate()
 
                 if self.plugboard is not None:
