@@ -26,6 +26,9 @@ class Walzen:
     def encode(self, letter):
         return self.wiring[string.ascii_uppercase.index(letter)]
 
+    def encode_reverse(self, letter):
+        return string.ascii_uppercase[self.wiring.index(letter)]
+
 
 class Enigma:
     def __init__(self):
