@@ -44,4 +44,22 @@ class Enigma:
         self.reflector = reflector
 
     def cipher(self, message):
-        pass
+        assert isinstance(message, str)
+
+        message = message.upper()
+        ciphered = ''
+
+        for letter in message:
+            self._rotate()
+
+            for rotor in self.rotors:
+                letter = rotor.encode(letter)
+
+            letter = reflector.encode(letter)
+
+            for rotor in rotors[::-1]:
+                letter = rotor.encode_reverse(letter)
+
+            ciphered += letter
+
+        return ciphered
