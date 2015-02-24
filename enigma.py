@@ -23,6 +23,9 @@ class Walzen:
         self.notch = notch
         self.wiring = wiring
 
+    def encode(self, letter):
+        return self.wiring[string.ascii_uppercase.index(letter)]
+
 
 class Enigma:
     def __init__(self):
