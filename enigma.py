@@ -73,3 +73,15 @@ class Enigma:
             if self.rotors[index].notch == self.rotors[index].wiring[0]:
                 wiring = self.rotors[index + 1].wiring
                 self.rotors[index + 1].wiring = wiring[1:] + wiring[0]
+
+
+if __name__ == '__main__':
+    rotors = (
+        Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q'),
+        Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E'),
+        Walzen(wiring='BDFHJLCPRTXVZNYEIWGAKMUSQO', notch='V'),
+    )
+
+    reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
+
+    machine = Enigma(rotors=rotors, reflector=reflector)
