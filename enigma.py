@@ -31,8 +31,17 @@ class Walzen:
 
 
 class Enigma:
-    def __init__(self):
-        pass
+    def __init__(self, rotors, reflector):
+        # Assert that rotors is a tuple and each tuple element is a Walzen
+        assert isinstance(rotors, tuple)
+        for index in range(len(rotors)):
+            assert isinstance(rotors[index], Walzen)
+
+        # Assert that reflector is an Umkehrwalze
+        assert isinstance(reflector, Umkehrwalze)
+
+        self.rotors = rotors
+        self.reflector = reflector
 
     def cipher(self, message):
         pass
