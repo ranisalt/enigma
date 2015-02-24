@@ -15,8 +15,13 @@ class Umkehrwalze:
 
 
 class Walzen:
-    def __init__(self):
-        pass
+    def __init__(self, notch, wiring):
+        assert isinstance(notch, str)
+        assert isinstance(wiring, str)
+        assert len(wiring) == len(string.ascii_uppercase)
+
+        self.notch = notch
+        self.wiring = wiring
 
 
 class Enigma:
