@@ -75,9 +75,9 @@ class Enigma:
                 for rotor in self.rotors:
                     letter = rotor.encode(letter)
 
-                letter = reflector.encode(letter)
+                letter = self.reflector.encode(letter)
 
-                for rotor in rotors[::-1]:
+                for rotor in self.rotors[::-1]:
                     letter = rotor.encode_reverse(letter)
 
                 letter = self.plugboard.swap(letter)
