@@ -44,7 +44,10 @@ class Walzen:
 
 
 class Enigma:
-    def __init__(self, rotors, reflector):
+    def __init__(self, plugboard, rotors, reflector):
+        # Assert that plugboard is a Steckerbrett
+        assert isinstance(plugboard, Steckerbrett)
+
         # Assert that rotors is a tuple and each tuple element is a Walzen
         assert isinstance(rotors, tuple)
         for index in range(len(rotors)):
@@ -53,6 +56,7 @@ class Enigma:
         # Assert that reflector is an Umkehrwalze
         assert isinstance(reflector, Umkehrwalze)
 
+        self.plugboard = plugboard
         self.rotors = rotors
         self.reflector = reflector
 
@@ -89,6 +93,9 @@ class Enigma:
 
 
 if __name__ == '__main__':
+    plugboard = Steckerbrett('PO', 'ML', 'IU', 'KJ', 'NH', 'YT', 'GB', 'VF',
+                             'RE', 'DC')
+
     rotors = (
         Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q'),
         Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E'),
@@ -97,4 +104,4 @@ if __name__ == '__main__':
 
     reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
 
-    machine = Enigma(rotors=rotors, reflector=reflector)
+    machine = Enigma(plugboard=plugboard, rotors=rotors, reflector=reflector)
