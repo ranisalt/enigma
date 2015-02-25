@@ -110,8 +110,13 @@ class Enigma:
 
         for index in range(len(self.rotors) - 1):
             if self.rotors[index].notch == self.rotors[index].wiring[0]:
+                if index == 1:
+                    wiring = self.rotors[index].wiring
+                    self.rotors[index].wiring = wiring[1:] + wiring[0]
+
                 wiring = self.rotors[index + 1].wiring
                 self.rotors[index + 1].wiring = wiring[1:] + wiring[0]
+
 
 
 if __name__ == '__main__':
