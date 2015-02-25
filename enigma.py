@@ -36,19 +36,27 @@ class Walzen:
         self.notch = notch
 
         if isinstance(offset, str) and len(offset) == 1:
-            _slice = string.ascii_uppercase.index(offset)
+            self.offset = string.ascii_uppercase.index(offset)
         elif isinstance(offset, int) and 0 <= offset < len(wiring):
-            _slice = offset
+            self.offset = offset
         else:
             raise ValueError('offset must be character or integer')
 
-        self.wiring = wiring[_slice:] + wiring[:_slice]
+        self.wiring = wiring
 
     def encode(self, letter):
-        return self.wiring[string.ascii_uppercase.index(letter)]
+        index = (string.ascii_uppercase.index(letter) + self.offset) % len(
+            self.wiring)
+
+        letter = self.wiring[index]
+        return letter
 
     def encode_reverse(self, letter):
-        return string.ascii_uppercase[self.wiring.index(letter)]
+        index = (self.wiring.index(letter) + self.offset) % len(
+            self.wiring)
+
+        letter = string.ascii_uppercase[index]
+        return letter
 
 
 class Enigma:
