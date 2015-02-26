@@ -1,6 +1,6 @@
 import unittest
 
-from enigma import Enigma, Umkehrwalze, Walzen
+from enigma import Enigma, Steckerbrett, Umkehrwalze, Walzen
 
 
 class EnigmaTestCase(unittest.TestCase):
@@ -26,6 +26,15 @@ class EnigmaTestCase(unittest.TestCase):
     def test_decode_message(self):
         decoded = self.machine.cipher('BDZGO')
         self.assertEqual('AAAAA', decoded)
+
+    def test_plugboard_scrambling(self):
+        # Plugboard just replace letters literally. Here, I chose to replace K
+        # with A, so every A input is K output and vice-versa. I chose K because
+        # it is possible to use the same example as above and it will not mess
+        # the expected output.
+        self.machine.plugboard = Steckerbrett('AK')
+        encoded = self.machine.cipher('KKKKK')
+        self.assertEqual('BDZGO', encoded)
 
 
 def run_tests():
