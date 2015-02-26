@@ -17,6 +17,12 @@ class EnigmaTestCase(unittest.TestCase):
 
         self.machine = Enigma(rotors=rotors, reflector=reflector)
 
+    def test_encode_message(self):
+        # The expected result for the setup above and message AAAAA is BDZGO
+        # Src: https://en.wikipedia.org/wiki/Enigma_rotor_details#Rotor_offset
+        encoded = self.machine.cipher('AAAAA')
+        self.assertEqual('BDZGO', encoded)
+
 
 def run_tests():
     runner = unittest.TextTestRunner()
