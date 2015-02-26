@@ -23,6 +23,10 @@ class EnigmaTestCase(unittest.TestCase):
         encoded = self.machine.cipher('AAAAA')
         self.assertEqual('BDZGO', encoded)
 
+    def test_decode_message(self):
+        decoded = self.machine.cipher('BDZGO')
+        self.assertEqual('AAAAA', decoded)
+
 
 def run_tests():
     runner = unittest.TextTestRunner()
