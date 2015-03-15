@@ -50,6 +50,9 @@ class PlugboardTestCase(unittest.TestCase):
         self.assertEqual('O', plugboard.swap('P'))
         self.assertEqual('M', plugboard.swap('L'))
 
+    def test_plugboard_fails_on_repeated_letter(self):
+        self.assertRaises(KeyError, Steckerbrett, 'PO', 'PL')
+
 
 def run_tests():
     unittest.main()
