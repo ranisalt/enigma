@@ -32,6 +32,12 @@ class RotorTestCase(unittest.TestCase):
         self.assertEqual('V', rotor.encode_reverse('A'))
 
 
+class ReflectorTestCase(unittest.TestCase):
+    def test_reflector(self):
+        reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
+        self.assertEqual('Y', reflector.encode('A'))
+
+
 def run_tests():
     runner = unittest.TextTestRunner()
     suite = unittest.TestLoader().loadTestsFromTestCase(RotorTestCase)
