@@ -3,44 +3,81 @@ import unittest
 from enigma import Enigma, Steckerbrett, Umkehrwalze, Walzen
 
 
+class RotorTestCase(unittest.TestCase):
+    def test_rotor_encoding(self):
+        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
+        self.assertEqual('E', rotor.encode('A'))
+
+    def test_rotor_reverse_encoding(self):
+        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
+        self.assertEqual('U', rotor.encode_reverse('A'))
+
+    def test_rotor_different_setting(self):
+        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                       setting='B')
+        self.assertEqual('K', rotor.encode('A'))
+        self.assertEqual('K', rotor.encode_reverse('A'))
+
+    def test_rotor_different_offset(self):
+        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                       offset='B')
+        self.assertEqual('D', rotor.encode('A'))
+        self.assertEqual('W', rotor.encode_reverse('A'))
+
+    def test_rotor_different_setting_and_offset(self):
+        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                       setting='B', offset='B')
+        self.assertEqual('J', rotor.encode('A'))
+        self.assertEqual('V', rotor.encode_reverse('A'))
+
+
+class ReflectorTestCase(unittest.TestCase):
+    def test_reflector(self):
+        reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
+        self.assertEqual('Y', reflector.encode('A'))
+
+    def test_reflector_fails_on_invalid_wiring(self):
+        self.assertRaises(KeyError, Umkehrwalze,
+                          wiring='YRUHQSLDPXNGOKMIEBFZCWVJA')
+        self.assertRaises(KeyError, Umkehrwalze,
+                          wiring='YRYHQSLDPXNGOKMIEBFZCWVJAT')
+
+
+class PlugboardTestCase(unittest.TestCase):
+    def test_plugboard_swapping(self):
+        plugboard = Steckerbrett('PO', 'ML', 'IU', 'KJ', 'NH', 'YT', 'GB',
+                                 'VF', 'RE', 'DC')
+        self.assertEqual('O', plugboard.swap('P'))
+        self.assertEqual('M', plugboard.swap('L'))
+
+    def test_plugboard_fails_on_repeated_letter(self):
+        self.assertRaises(KeyError, Steckerbrett, 'PO', 'PL')
+
+
 class EnigmaTestCase(unittest.TestCase):
     def setUp(self):
-        # Rotors go from right to left, so I reverse the tuple to make Rotor
-        # I be the leftmost. I may change this behavior in the future.
-        rotors = (
+        self.rotors = (
             Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q'),
             Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E'),
             Walzen(wiring='BDFHJLCPRTXVZNYEIWGAKMUSQO', notch='V'),
-        )[::-1]
+        )
 
-        reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
+        self.reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
 
-        self.machine = Enigma(rotors=rotors, reflector=reflector)
+        self.plugboard = Steckerbrett('PO', 'ML', 'IU', 'KJ', 'NH', 'YT', 'GB',
+                                      'VF', 'RE', 'DC')
 
-    def test_encode_message(self):
-        # The expected result for the setup above and message AAAAA is BDZGO
-        # Src: https://en.wikipedia.org/wiki/Enigma_rotor_details#Rotor_offset
-        encoded = self.machine.cipher('AAAAA')
-        self.assertEqual('BDZGO', encoded)
+    def test_enigma_cipher(self):
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
+        self.assertEqual('BDZGO', machine.cipher('AAAAA'))
 
-    def test_decode_message(self):
-        decoded = self.machine.cipher('BDZGO')
-        self.assertEqual('AAAAA', decoded)
-
-    def test_plugboard_scrambling(self):
-        # Plugboard just replace letters literally. Here, I chose to replace K
-        # with A, so every A input is K output and vice-versa. I chose K because
-        # it is possible to use the same example as above and it will not mess
-        # the expected output.
-        self.machine.plugboard = Steckerbrett('AK')
-        encoded = self.machine.cipher('KKKKK')
-        self.assertEqual('BDZGO', encoded)
+    def test_enigma_decipher(self):
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
+        self.assertEqual('AAAAA', machine.cipher('BDZGO'))
 
 
 def run_tests():
-    runner = unittest.TextTestRunner()
-    suite = unittest.TestLoader().loadTestsFromTestCase(EnigmaTestCase)
-    runner.run(suite)
+    unittest.main()
 
 
 if __name__ == '__main__':  # pragma: no cover
