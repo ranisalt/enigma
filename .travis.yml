@@ -5,6 +5,13 @@ python:
     - "3.3"
     - "3.4"
 
+install:
+    - pip install coveralls
+
 # run tests and coverage
 script:
     - python test.py
+    - coverage run --source=. test.py
+
+after_success:
+    - coveralls
