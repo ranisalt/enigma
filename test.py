@@ -8,7 +8,6 @@ class RotorTestCase(unittest.TestCase):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
         self.assertEqual('E', rotor.encode('A'))
 
-
     def test_rotor_reverse_encoding(self):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
         self.assertEqual('U', rotor.encode_reverse('A'))
