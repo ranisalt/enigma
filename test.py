@@ -71,6 +71,10 @@ class EnigmaTestCase(unittest.TestCase):
         machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
         self.assertEqual('BDZGO', machine.cipher('AAAAA'))
 
+    def test_enigma_decipher(self):
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
+        self.assertEqual('AAAAA', machine.cipher('BDZGO'))
+
 
 def run_tests():
     unittest.main()
