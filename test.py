@@ -4,7 +4,9 @@ from enigma import Enigma, Steckerbrett, Umkehrwalze, Walzen
 
 
 class RotorTestCase(unittest.TestCase):
-    pass
+    def test_rotor_encoding(self):
+        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
+        self.assertEqual('E', rotor.encode('A'))
 
 
 def run_tests():
