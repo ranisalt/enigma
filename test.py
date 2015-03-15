@@ -54,6 +54,20 @@ class PlugboardTestCase(unittest.TestCase):
         self.assertRaises(KeyError, Steckerbrett, 'PO', 'PL')
 
 
+class EnigmaTestCase(unittest.TestCase):
+    def setUp(self):
+        self.rotors = (
+            Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q'),
+            Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E'),
+            Walzen(wiring='BDFHJLCPRTXVZNYEIWGAKMUSQO', notch='V'),
+        )
+
+        self.reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
+
+        self.plugboard = Steckerbrett('PO', 'ML', 'IU', 'KJ', 'NH', 'YT', 'GB',
+                                      'VF', 'RE', 'DC')
+
+
 def run_tests():
     unittest.main()
 
