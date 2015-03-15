@@ -36,6 +36,12 @@ class ReflectorTestCase(unittest.TestCase):
         reflector = Umkehrwalze(wiring='YRUHQSLDPXNGOKMIEBFZCWVJAT')
         self.assertEqual('Y', reflector.encode('A'))
 
+    def test_reflector_fails_on_invalid_wiring(self):
+        self.assertRaises(KeyError, Umkehrwalze,
+                          wiring='YRUHQSLDPXNGOKMIEBFZCWVJA')
+        self.assertRaises(KeyError, Umkehrwalze,
+                          wiring='YRYHQSLDPXNGOKMIEBFZCWVJAT')
+
 
 def run_tests():
     unittest.main()
