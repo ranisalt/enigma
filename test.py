@@ -13,6 +13,12 @@ class RotorTestCase(unittest.TestCase):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
         self.assertEqual('U', rotor.encode_reverse('A'))
 
+    def test_rotor_different_setting(self):
+        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                       setting='B')
+        self.assertEqual('K', rotor.encode('A'))
+        self.assertEqual('K', rotor.encode_reverse('A'))
+
 
 def run_tests():
     runner = unittest.TextTestRunner()
