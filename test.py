@@ -43,6 +43,14 @@ class ReflectorTestCase(unittest.TestCase):
                           wiring='YRYHQSLDPXNGOKMIEBFZCWVJAT')
 
 
+class PlugboardTestCase(unittest.TestCase):
+    def test_plugboard_swapping(self):
+        plugboard = Steckerbrett('PO', 'ML', 'IU', 'KJ', 'NH', 'YT', 'GB',
+                                 'VF', 'RE', 'DC')
+        self.assertEqual('O', plugboard.swap('P'))
+        self.assertEqual('M', plugboard.swap('L'))
+
+
 def run_tests():
     unittest.main()
 
