@@ -67,6 +67,10 @@ class EnigmaTestCase(unittest.TestCase):
         self.plugboard = Steckerbrett('PO', 'ML', 'IU', 'KJ', 'NH', 'YT', 'GB',
                                       'VF', 'RE', 'DC')
 
+    def test_enigma_cipher(self):
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
+        self.assertEqual('BDZGO', machine.cipher('AAAAA'))
+
 
 def run_tests():
     unittest.main()
