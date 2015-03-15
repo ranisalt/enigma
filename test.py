@@ -39,9 +39,7 @@ class ReflectorTestCase(unittest.TestCase):
 
 
 def run_tests():
-    runner = unittest.TextTestRunner()
-    suite = unittest.TestLoader().loadTestsFromTestCase(RotorTestCase)
-    runner.run(suite)
+    unittest.main()
 
 
 if __name__ == '__main__':  # pragma: no cover
