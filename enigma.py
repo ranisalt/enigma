@@ -21,6 +21,10 @@ class Steckerbrett:
 
 class Umkehrwalze:
     def __init__(self, wiring):
+        assert isinstance(wiring, str)
+        if (sorted(wiring) != list(string.ascii_uppercase)):
+            raise KeyError('Plugboard should contain every letter only once')
+
         self.wiring = wiring
 
     def encode(self, letter):
