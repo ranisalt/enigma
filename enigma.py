@@ -28,12 +28,19 @@ class Umkehrwalze:
 
 
 class Walzen:
-    def __init__(self, notch, wiring, offset='A'):
+    def __init__(self, notch, wiring, setting='A', offset='A'):
         assert isinstance(notch, str)
         assert isinstance(wiring, str)
         assert len(wiring) == len(string.ascii_uppercase)
 
         self.notch = notch
+
+        if isinstance(setting, str) and len(setting) == 1:
+            self.setting = string.ascii_uppercase.index(setting)
+        elif isinstance(setting, int) and 0 <= setting < len(wiring):
+            self.setting = setting
+        else:
+            raise ValueError('setting must be character or integer')
 
         if isinstance(offset, str) and len(offset) == 1:
             self.offset = string.ascii_uppercase.index(offset)
