@@ -21,6 +21,10 @@ class Steckerbrett:
 
 class Umkehrwalze:
     def __init__(self, wiring):
+        assert isinstance(wiring, str)
+        if (sorted(wiring) != list(string.ascii_uppercase)):
+            raise KeyError('Plugboard should contain every letter only once')
+
         self.wiring = wiring
 
     def encode(self, letter):
@@ -28,12 +32,19 @@ class Umkehrwalze:
 
 
 class Walzen:
-    def __init__(self, notch, wiring, offset='A'):
+    def __init__(self, notch, wiring, setting='A', offset='A'):
         assert isinstance(notch, str)
         assert isinstance(wiring, str)
         assert len(wiring) == len(string.ascii_uppercase)
 
         self.notch = notch
+
+        if isinstance(setting, str) and len(setting) == 1:
+            self.setting = string.ascii_uppercase.index(setting)
+        elif isinstance(setting, int) and 0 <= setting < len(wiring):
+            self.setting = setting
+        else:
+            raise ValueError('setting must be character or integer')
 
         if isinstance(offset, str) and len(offset) == 1:
             self.offset = string.ascii_uppercase.index(offset)
@@ -45,21 +56,23 @@ class Walzen:
         self.wiring = wiring
 
     def encode(self, letter):
-        index = string.ascii_uppercase.index(letter)
+        index = (string.ascii_uppercase.index(letter) - self.setting) % len(
+            self.wiring)
         letter = self.wiring[index]
 
-        index = (string.ascii_uppercase.index(letter) - self.offset) % len(
-            self.wiring)
+        index = (string.ascii_uppercase.index(letter) + self.setting -
+                 self.offset) % len(self.wiring)
         letter = string.ascii_uppercase[index]
 
         return letter
 
     def encode_reverse(self, letter):
-        index = (string.ascii_uppercase.index(letter) + self.offset) % len(
-            self.wiring)
+        index = (string.ascii_uppercase.index(letter) - self.setting +
+                 self.offset) % len(self.wiring)
         letter = string.ascii_uppercase[index]
 
-        index = self.wiring.index(letter)
+        index = (self.wiring.index(letter) + self.setting) % len(
+            self.wiring)
         letter = string.ascii_uppercase[index]
 
         return letter
@@ -111,18 +124,15 @@ class Enigma:
         return ciphered
 
     def _rotate(self):
-        wiring = self.rotors[0].wiring
-        self.rotors[0].wiring = wiring[1:] + wiring[0]
+        self.rotors[0].setting += 1
 
         for index in range(len(self.rotors) - 1):
-            if self.rotors[index].notch == self.rotors[index].wiring[0]:
+            rotor = self.rotors[index]
+            if rotor.notch == rotor.wiring[rotor.setting]:
                 if index == 1:
-                    wiring = self.rotors[index].wiring
-                    self.rotors[index].wiring = wiring[1:] + wiring[0]
+                    rotor.setting += 1
 
-                wiring = self.rotors[index + 1].wiring
-                self.rotors[index + 1].wiring = wiring[1:] + wiring[0]
-
+                self.rotors[index + 1].setting += 1
 
 
 if __name__ == '__main__':
