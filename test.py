@@ -15,8 +15,8 @@ class RotorTestCase(unittest.TestCase):
     def test_rotor_different_setting(self):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
                        ringstellung='B')
-        self.assertEqual('K', rotor.encode('A'))
-        self.assertEqual('K', rotor.encode_reverse('A'))
+        self.assertEqual('J', rotor.encode('A'))
+        self.assertEqual('V', rotor.encode_reverse('A'))
 
     def test_rotor_different_offset(self):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
