@@ -33,8 +33,8 @@ class RotorTestCase(unittest.TestCase):
     def test_rotor_turnover(self):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
         rotor.advance()
-        self.assertEqual('C', rotor.encode('A'))
-        self.assertEqual('Y', rotor.encode_reverse('A'))
+        self.assertEqual('J', rotor.encode('A'))
+        self.assertEqual('V', rotor.encode_reverse('A'))
 
 
 class ReflectorTestCase(unittest.TestCase):
