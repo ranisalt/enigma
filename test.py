@@ -27,8 +27,8 @@ class RotorTestCase(unittest.TestCase):
     def test_rotor_different_setting_and_offset(self):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
                        ringstellung='B', offset='B')
-        self.assertEqual('J', rotor.encode('A'))
-        self.assertEqual('V', rotor.encode_reverse('A'))
+        self.assertEqual('I', rotor.encode('A'))
+        self.assertEqual('X', rotor.encode_reverse('A'))
 
 
 class ReflectorTestCase(unittest.TestCase):
