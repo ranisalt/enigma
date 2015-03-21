@@ -81,6 +81,11 @@ class EnigmaTestCase(unittest.TestCase):
         machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
         self.assertEqual('AAAAA', machine.cipher('BDZGO'))
 
+    def test_enigma_full_cycle(self):
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
+        machine.cipher('A' * 16900) # this should do a full cycle on rotors
+        self.assertEqual('B', machine.cipher('A'))
+
 
 def run_tests():
     unittest.main()
