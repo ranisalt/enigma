@@ -124,15 +124,15 @@ class Enigma:
         return ciphered
 
     def _rotate(self):
-        self.rotors[0].ringstellung += 1
+        self.rotors[0].advance()
 
         for index in range(len(self.rotors) - 1):
             rotor = self.rotors[index]
             if rotor.notch == rotor.wiring[rotor.ringstellung]:
                 if index == 1:
-                    rotor.ringstellung+= 1
+                    rotor.advance()
 
-                self.rotors[index + 1].ringstellung += 1
+                self.rotors[index + 1].advance()
 
 
 if __name__ == '__main__':
