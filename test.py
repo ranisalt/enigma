@@ -30,6 +30,11 @@ class RotorTestCase(unittest.TestCase):
         self.assertEqual('I', rotor.encode('A'))
         self.assertEqual('X', rotor.encode_reverse('A'))
 
+    def test_setting_integer(self):
+        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                       ringstellung=1)
+        self.assertEqual('J', rotor.encode('A'))
+
     def test_rotor_turnover(self):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
         rotor.advance()
