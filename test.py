@@ -40,6 +40,23 @@ class RotorTestCase(unittest.TestCase):
                        offset=1)
         self.assertEqual('D', rotor.encode('A'))
 
+    def test_invalid_parameters(self):
+        # I prefered to use a single test since both parameters hare equal
+        # restrictions, so probably both succeed (or fail) simultaneously
+        self.assertRaises(ValueError, Walzen,
+                          wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                          ringstellung='AA')
+        self.assertRaises(ValueError, Walzen,
+                          wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                          ringstellung=26)
+        self.assertRaises(ValueError, Walzen,
+                          wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                          offset='AA')
+        self.assertRaises(ValueError, Walzen,
+                          wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
+                          offset=26)
+
+
     def test_rotor_turnover(self):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
         rotor.advance()
