@@ -56,24 +56,22 @@ class Walzen:
         self.wiring = wiring
 
     def encode(self, letter):
-        index = (string.ascii_uppercase.index(letter) - self.ringstellung) % len(
-            self.wiring)
-        letter = self.wiring[index]
+        index = string.ascii_uppercase.index(letter) - self.ringstellung
+        letter = self.wiring[index % len(self.wiring)]
 
-        index = (string.ascii_uppercase.index(letter) + self.ringstellung -
-                 self.offset) % len(self.wiring)
-        letter = string.ascii_uppercase[index]
+        index = string.ascii_uppercase.index(
+            letter) + self.ringstellung - self.offset
+        letter = string.ascii_uppercase[index % len(self.wiring)]
 
         return letter
 
     def encode_reverse(self, letter):
-        index = (string.ascii_uppercase.index(letter) - self.ringstellung +
-                 self.offset) % len(self.wiring)
-        letter = string.ascii_uppercase[index]
+        index = string.ascii_uppercase.index(
+            letter) - self.ringstellung + self.offset
+        letter = string.ascii_uppercase[index % len(self.wiring)]
 
-        index = (self.wiring.index(letter) + self.ringstellung) % len(
-            self.wiring)
-        letter = string.ascii_uppercase[index]
+        index = self.wiring.index(letter) + self.ringstellung
+        letter = string.ascii_uppercase[index % len(self.wiring)]
 
         return letter
 
