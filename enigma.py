@@ -73,6 +73,10 @@ class Walzen:
 
         return letter
 
+    def advance(self):
+        self.ringstellung = (self.ringstellung - 1) % len(self.wiring)
+        self.offset = (self.offset + 1) % len(self.wiring)
+
 
 class Enigma:
     def __init__(self, rotors, reflector, plugboard=None):
