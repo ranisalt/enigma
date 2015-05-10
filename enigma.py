@@ -58,13 +58,13 @@ class Walzen:
         index = string.ascii_uppercase.index(letter) - self.ringstellung
         letter = self.wiring[index % len(self.wiring)]
 
-        index = string.ascii_uppercase.index(letter) - self.offset
+        index = string.ascii_uppercase.index(letter) + self.ringstellung - self.offset
         letter = string.ascii_uppercase[index % len(self.wiring)]
 
         return letter
 
     def encode_reverse(self, letter):
-        index = string.ascii_uppercase.index(letter) + self.offset
+        index = string.ascii_uppercase.index(letter) - self.ringstellung + self.offset
         letter = string.ascii_uppercase[index % len(self.wiring)]
 
         index = self.wiring.index(letter) + self.ringstellung
@@ -74,7 +74,6 @@ class Walzen:
 
     def advance(self):
         self.ringstellung = (self.ringstellung - 1) % len(self.wiring)
-        self.offset = (self.offset + 1) % len(self.wiring)
 
 
 class Enigma:
