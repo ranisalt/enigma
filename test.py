@@ -123,6 +123,27 @@ class EnigmaTestCase(unittest.TestCase):
                          plugboard=self.plugboard)
         self.assertEqual('GCZBP', machine.cipher('AAAAA'))
 
+    def test_enigma_different_ringstellung(self):
+        self.rotors = (
+            Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q', ringstellung='B'),
+            Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E', ringstellung='B'),
+            Walzen(wiring='BDFHJLCPRTXVZNYEIWGAKMUSQO', notch='V', ringstellung='B'),
+        )
+
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
+        self.assertEqual('EWTYX', machine.cipher('AAAAA'))
+
+    def test_enigma_different_grundstellung(self):
+        self.rotors = (
+            Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q', offset='B'),
+            Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E', offset='B'),
+            Walzen(wiring='BDFHJLCPRTXVZNYEIWGAKMUSQO', notch='V', offset='B'),
+        )
+
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
+        self.assertEqual('PGQPW', machine.cipher('AAAAA'))
+
+
 
 def run_tests():
     unittest.main()
