@@ -78,8 +78,8 @@ class Enigma:
         message = message.upper()
         ciphered = ''
 
-        # pode pegar esses valores no __init__ também
-        # essas funções lambda são puro charme.
+        # Those values can be set on __init__
+        # lambda functions are pure awesomeness
         p = lambda n: self.grundstellung[n]
         r = lambda n: self.rotors[n].ringstellung
         n = lambda n: self.rotors[n].notch
