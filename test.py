@@ -8,60 +8,13 @@ class RotorTestCase(unittest.TestCase):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
         self.assertEqual('E', rotor.encode('A'))
 
+        # repeating key rotates rotors backwards. E -> J -> C...
+        self.assertEqual('J', rotor.encode('A', 1))
+
     def test_rotor_reverse_encoding(self):
         rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
         self.assertEqual('U', rotor.encode_reverse('A'))
-
-    def test_rotor_different_setting(self):
-        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                       ringstellung='B')
-        self.assertEqual('K', rotor.encode('A'))
-        self.assertEqual('K', rotor.encode_reverse('A'))
-
-    def test_rotor_different_offset(self):
-        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                       offset='B')
-        self.assertEqual('D', rotor.encode('A'))
-        self.assertEqual('W', rotor.encode_reverse('A'))
-
-    def test_rotor_different_setting_and_offset(self):
-        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                       ringstellung='B', offset='B')
-        self.assertEqual('J', rotor.encode('A'))
-        self.assertEqual('V', rotor.encode_reverse('A'))
-
-    def test_setting_integer(self):
-        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                       ringstellung=1)
-        self.assertEqual('K', rotor.encode('A'))
-
-    def test_offset_integer(self):
-        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                       offset=1)
-        self.assertEqual('D', rotor.encode('A'))
-
-    def test_invalid_parameters(self):
-        # I prefered to use a single test since both parameters hare equal
-        # restrictions, so probably both succeed (or fail) simultaneously
-        self.assertRaises(ValueError, Walzen,
-                          wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                          ringstellung='AA')
-        self.assertRaises(ValueError, Walzen,
-                          wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                          ringstellung=26)
-        self.assertRaises(ValueError, Walzen,
-                          wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                          offset='AA')
-        self.assertRaises(ValueError, Walzen,
-                          wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q',
-                          offset=26)
-
-
-    def test_rotor_turnover(self):
-        rotor = Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q')
-        rotor.advance()
-        self.assertEqual('J', rotor.encode('A'))
-        self.assertEqual('V', rotor.encode_reverse('A'))
+        self.assertEqual('V', rotor.encode_reverse('A', 1))
 
 
 class ReflectorTestCase(unittest.TestCase):
@@ -135,14 +88,23 @@ class EnigmaTestCase(unittest.TestCase):
 
     def test_enigma_different_grundstellung(self):
         self.rotors = (
-            Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q', offset='B'),
-            Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E', offset='B'),
-            Walzen(wiring='BDFHJLCPRTXVZNYEIWGAKMUSQO', notch='V', offset='B'),
+            Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q'),
+            Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E'),
+            Walzen(wiring='BDFHJLCPRTXVZNYEIWGAKMUSQO', notch='V'),
         )
 
-        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector)
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector, grundstellung='BBB')
         self.assertEqual('PGQPW', machine.cipher('AAAAA'))
 
+    def test_enigma_different_ringstellung_and_grundstellung(self):
+        self.rotors = (
+            Walzen(wiring='EKMFLGDQVZNTOWYHXUSPAIBRCJ', notch='Q', ringstellung='B'),
+            Walzen(wiring='AJDKSIRUXBLHWTMCQGZNPYFVOE', notch='E', ringstellung='B'),
+            Walzen(wiring='BDFHJLCPRTXVZNYEIWGAKMUSQO', notch='V', ringstellung='B'),
+        )
+
+        machine = Enigma(rotors=self.rotors[::-1], reflector=self.reflector, grundstellung='BBB')
+        self.assertEqual('BDZGO', machine.cipher('AAAAA'))
 
 
 def run_tests():
